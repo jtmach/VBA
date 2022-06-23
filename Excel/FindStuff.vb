@@ -1,3 +1,4 @@
+' Used for finding a matching column that also matches a date that is between 2 date ranges.
 Public Function FindStuff(criteria As String, criteriaDate As Date, _
   lookupSheet As String, criteriaColumn As Integer, startDateColumn As Integer, _
   endDateColumn As Integer, resultsColumn As Integer)

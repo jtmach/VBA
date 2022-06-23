@@ -1,5 +1,6 @@
 Option Explicit On
 
+' Looks for a 7 or 8 digit number within cell text, if found return the first match.
 Function FindSkus(searchCell)
   Dim RegEx As Object
   RegEx = CreateObject("VBScript.RegExp")
