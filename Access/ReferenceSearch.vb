@@ -16,7 +16,7 @@ Public Function Search()
   
   Dim tbl As TableDef
   For Each tbl In CurrentDb.TableDefs
-    If Not UCase(Left(tbl.Name, 4)) = "MSYS" And Not UCase(Left(tbl.Name, 2)) = "x_" Then
+    If Not UCase(Left(tbl.Name, 4)) = "MSYS" Not UCase(Left(tbl.Name, 4)) = "~TMP" And Not UCase(Left(tbl.Name, 2)) = "x_" Then
       If Not SearchAll(tbl.Name, True) Then
         Debug.Print "--Table (" & tbl.Name & ") does not appear to be used."
         tbl.Name = "x_" & tbl.Name
@@ -156,17 +156,22 @@ Public Function SearchReports(searchText As String, Optional silent As Boolean =
   Next
 End Function
 
-Private Function ClearTempQueries(db As Database)
-  Dim qryCount As Integer: qryCount = db.QueryDefs.Count
+Private Function ClearTempQueries()
+  Dim qryToDelete As Collection
+  Set qryToDelete = New Collection
+  Dim qryCount As Integer: qryCount = currentdb.QueryDefs.Count
   Dim qryIndex As Integer
   
-  For qryIndex = 1 To qryCount
-    If Left(db.QueryDefs(qryIndex).Name, 4) = "~sq_" Then
-      Debug.Print "Deleting: " & db.QueryDefs(qryIndex).Name
-      db.QueryDefs.Delete (db.QueryDefs(qryIndex).Name)
-      qryIndex = qryIndex - 1
-      qryCount = qryCount - 1
+  For qryIndex = 0 To currentdb.QueryDefs.Count - 1
+    If Left(currentdb.QueryDefs(qryIndex).Name, 4) = "~sq_" Or Left(currentdb.QueryDefs(qryIndex).Name, 4) = "~TMP" Then
+      qryToDelete.Add currentdb.QueryDefs(qryIndex).Name
     End If
+  Next
+  
+  Dim qry As Variant
+  For Each qry In qryToDelete
+    Debug.Print "Deleting: " & qry
+    currentdb.QueryDefs.Delete qry
   Next
 End Function
 
