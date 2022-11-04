@@ -9,7 +9,7 @@ Public Function Search()
     If Not Left(qry.Name, 1) = "~" And Not Left(qry.Name, 2) = "x_" Then
       If Not SearchAll(qry.Name, True) Then
         Debug.Print "--Query (" & qry.Name & ") does not appear to be used."
-        qry.Name = "x_" & qry.Name
+        qry.Name = "x_" & qry.Name  
       End If
     End If
   Next
