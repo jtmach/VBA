@@ -187,6 +187,9 @@ Private Function SearchControl(ctrl As Control, searchText As String, Optional s
       If InStr(cmbBox.ControlSource, searchText) > 0 Then
         SearchControl = True
       End If
+      If InStr(cmbBox.RowSource, searchText) > 0 Then
+        SearchControl = True
+      End If
     Case "Image":
       DoEvents
     Case "Label":
@@ -207,6 +210,9 @@ Private Function SearchControl(ctrl As Control, searchText As String, Optional s
       Dim optGrp As OptionGroup
       Set optGrp = ctrl
       If InStr(optGrp.ControlSource, searchText) > 0 Then
+        SearchControl = True
+      End If
+      If InStr(lstBox.RowSource, searchText) > 0 Then
         SearchControl = True
       End If
     Case "Page":
